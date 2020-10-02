@@ -19,7 +19,7 @@ properties:
     - protocol: tcp
       port: '80'
   networkProfile:
-    id: /subscriptions/REPLACE_ME_SUBSCRIPTION_ID/resourceGroups/REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers/providers/Microsoft.Network/networkProfiles/aci-network-profile
+    id: /subscriptions/REPLACE_ME_SUBSCRIPTION_ID/resourceGroups/REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER/providers/Microsoft.Network/networkProfiles/aci-network-profile
   osType: Linux
   imageRegistryCredentials: # Credentials to pull a private image
   - server: REPLACE_ME_CONTAINER_REGISTRY.azurecr.io

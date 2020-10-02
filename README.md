@@ -1,6 +1,10 @@
 # Azure-Synapse-REST-API
 A REST API for Azure Synapse (SQL DW).  This will allow you to call a REST interface to perform SELECT, INSERT, UPDATE and DELETE statements against a Synapse database.  This can also work against a SQL Database with some minor changes to the stored procedure (remove the DISTRIBUTIONs keywords).
 
+# Assumptions
+- You have a Synapse database
+- You have a VNET
+- You can create an empty Subnet
 
 # Dotnet Core requirements
 - Install .NET Core 3.1.x
@@ -10,6 +14,9 @@ dotnet add package Newtonsoft.Json
 dotnet add package System.Data.SqlClient
 dotnet add package Microsoft.Extensions.Configuration
 ```
+
+# Search and Replace
+- Search for REPLACE_ME and do the replacements
 
 # Deploy the stored procedure
 - Run the SP: dbo.SQL_REST_API.sql
@@ -74,7 +81,7 @@ $context = Get-AzSubscription -SubscriptionId $subscriptionId
 Set-AzContext $context
 
 # Script parameters
-$resourceGroup="REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers"
+$resourceGroup="REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER"
 $location="eastus"
 $today=(Get-Date).ToString('yyyy-MM-dd-HH-mm-ss')
 $deploymentName="MyDeployment-$today"
@@ -87,8 +94,8 @@ New-AzResourceGroupDeployment -Name $deploymentName -ResourceGroupName $resource
 ### Get the Network Profile
 ```
 az login
-az network profile list --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers --query [0].id --output tsv
--- az network profile delete --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers --name aci-network-profile
+az network profile list --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER --query [0].id --output tsv
+-- az network profile delete --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER --name aci-network-profile
 ```
 ### Update your deployment file
 - Update the file vnet-deploy-aci.yaml file (in this repo)
@@ -96,9 +103,9 @@ az network profile list --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Con
 ### Deploy your ACI
 ```
 az acr private-endpoint-connection list --registry-name REPLACE_ME_CONTAINER_REGISTRY
-az container create --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers --file vnet-deploy-aci.yaml
-az container show --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers --name sqlapiyaml --query ipAddress.ip --output tsv
-az container logs --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers --name sqlapiyaml
+az container create --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER --file vnet-deploy-aci.yaml
+az container show --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER --name sqlapiyaml --query ipAddress.ip --output tsv
+az container logs --resource-group REPLACE_ME_VNET_RESOURCE_GROUP_NAME_FOR_CONTAINER --name sqlapiyaml
 ```
 
 ### Test your ACI (on private subnet)

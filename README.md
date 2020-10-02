@@ -109,6 +109,30 @@ jsonSQL='{ "operation":"select", "sql":"SELECT TOP 10 StateAbbreviation FROM dbo
 curl -k -G ${url} --data-urlencode "json=$jsonSQL"
 ```
 
+## SQL REST Commands
+```
+-- Everything has single quotes placed around the values.  SQL Server ignores for numeric data types.
+
+-- This is the supported operations:
+-- table: required -> the table to interact
+-- operation: required -> valid values: select, insert, delete, update, upsert
+-- select: fields -> the fields to select, the values are ignored
+--         match  -> the fields and values to which to filter
+-- insert: fields -> the fields to insert with their values
+--         match  -> is ignored
+--         note   -> do not provide any identity columns
+-- update: fields -> the fields to update with their values
+--         match  -> the fields and values to which to identify the records to update
+--         note   -> do not provide any identity columns (they cannot be updated)
+-- upsert: fields -> the fields to insert with their values
+--         match  -> the fields and values to which to perform the update, if no match then an insert is performed
+--         note   -> do not provide any identity columns
+-- delete: fields -> not required
+--         match  -> the fields and values to which to identify the records to delete
+
+-- The match clause is "optional", but you really need to provide it to prevent actions such as selecting the entire table or deleting an entire table.
+```
+
 # Notes
 - If you ACR is on private link you need to allow all networks during the ACI deployment
 - You can deploy this code as an Azure Function.  This code was done for a private link Synapse instance so ACI on the same VNET was the preferred apporach.

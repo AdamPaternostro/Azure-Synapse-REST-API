@@ -1,0 +1,30 @@
+apiVersion: '2019-12-01'
+location: eastus2
+name: sqlapiyaml
+properties:
+  containers:
+  - name: sqlapiyaml
+    properties:
+      image: REPLACE_ME_CONTAINER_REGISTRY.azurecr.io/sqlapi:latest
+      ports:
+      - port: 80
+        protocol: TCP
+      resources:
+        requests:
+          cpu: 1.0
+          memoryInGB: 1.5
+  ipAddress:
+    type: Private
+    ports:
+    - protocol: tcp
+      port: '80'
+  networkProfile:
+    id: /subscriptions/REPLACE_ME_SUBSCRIPTION_ID/resourceGroups/REPLACE_ME_VNET_RESOURCE_GROUP_NAME-Containers/providers/Microsoft.Network/networkProfiles/aci-network-profile
+  osType: Linux
+  imageRegistryCredentials: # Credentials to pull a private image
+  - server: REPLACE_ME_CONTAINER_REGISTRY.azurecr.io
+    username: REPLACE_ME_CONTAINER_REGISTRY_USERNAME
+    password: REPLACE_ME_CONTAINER_REGISTRY_PASSWORD
+  restartPolicy: Always
+tags: null
+type: Microsoft.ContainerInstance/containerGroups

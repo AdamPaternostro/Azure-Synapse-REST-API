@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "resources": [
+      {
+        "name": "aci-network-profile",
+        "type": "Microsoft.Network/networkProfiles",
+        "apiVersion": "2020-05-01",
+        "location": "eastus2",
+        "properties": {
+          "containerNetworkInterfaceConfigurations": [
+            {
+              "name": "eth0",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfigprofile1",
+                    "properties": {
+                      "subnet": {
+                        "id": "/subscriptions/REPLACE_ME_SUBSCRIPTION_ID/resourceGroups/REPLACE_ME_VNET_RESOURCE_GROUP_NAME/providers/Microsoft.Network/virtualNetworks/REPLACE_ME_VNET_NAME/subnets/azure-container-instances"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
